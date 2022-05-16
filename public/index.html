@@ -7,6 +7,23 @@
     <title>Home | page</title>
 </head>
 <body>
-    <h1>Wellcome to Home page of static Website</h1>
+    <script>
+        let data = fetch('http://localhost:3000/', {
+            method: 'GET',
+            headers: {
+                'Content-Type': 'application/json'
+            }
+        })
+        .then(response => response.json())
+        .then(data => {
+            console.log(data);
+        })
+        .catch(error => {
+            console.log(error);
+        });  
+    </script>
+
+   
+
 </body>
 </html>
