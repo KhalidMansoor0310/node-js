@@ -1,11 +1,25 @@
-const http = require('http');
+const express = require('express');
+const app = express();
+const path = require('path');
 
 
-http.createServer(function(req,res){
-    // if someone wants to use response as an html then use http header 
-    // to tell the browser that the response is html
-    res.writeHead(200,{'Content-Type':'text/html'});
-    res.write("Wellcome to Node JS");
-    res.end();
-}).listen(3000);
+const publicPath = path.join(__dirname,'public');
+// app.use(express.static(publicPath));
 
+
+app.get('/',(req,res)=>{
+    res.sendFile(`${publicPath}/index.html`);
+})
+
+app.get('/about',(req,res)=>{
+    res.sendFile(`${publicPath}/about.html`);
+})
+
+app.get('*',(req,res)=>{
+    res.sendFile(`${publicPath}/PageNotFound.html`);
+})
+
+app.listen(3000,()=>{
+    console.log('Server is running on port 3000');
+}
+);
