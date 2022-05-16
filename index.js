@@ -1,35 +1,15 @@
 const express = require('express');
-
 const app = express();
-const multer = require('multer');
+const mongoose  = require('mongoose');
 
-const upload = multer({
-    storage: multer.diskStorage({
-        destination: function (req, file, cb) {
-            cb(null, './public/uploads/')
-        },
+app.use(express.json());
+app.use('/api/product', require('./routes/product'));
 
-        filename: function (req, file, cb) {
-            cb(null, file.originalname)
-        },
-        limits: {
-            fileSize: 1024 * 1024 * 5
-        }
-    }),
-}).single('file');
 
-app.post('/upload', function (req, res) {
-    upload(req, res, function (err) {
-        if (err) {
-            return res.end("Error uploading file."+err.message);
-        }
-        res.end("File is uploaded");
-    });
+mongoose.connect('mongodb+srv://khalidMansoor:khalidkhan123@cluster0.tinyo.mongodb.net/e-comm?retryWrites=true&w=majority',()=>{
+    console.log('connected to mongodb');
 });
-
-
-
 app.listen(3000, () => {
-    console.log('listening on port 3000');
+    console.log('Server is running on port 3000');
     }
 );
