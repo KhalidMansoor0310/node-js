@@ -27,12 +27,8 @@ product.post('/newProduct', async (req, res) => {
 
 product.put('/updateProduct/:id', async (req, res) => {
     try {
-        const product = await Product.findByIdAndUpdate(req.params.id, {
-            name: req.body.name,
-            price: req.body.price,
-            description: req.body.description,
-            category: req.body.category,
-            brand: req.body.brand
+        const product = await Product.updateOne(req.params, {
+           $set: req.body
         });
         res.status(200).json(`${product.name} Product updated Successfully`);
     } catch (error) {
