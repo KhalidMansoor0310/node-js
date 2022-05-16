@@ -49,6 +49,22 @@ product.delete('/deleteProduct/:id', async (req, res) => {
     }
 })
 
+// search by multiple fields 
+product.get('/search/:name/:price/:category/:brand', async (req, res) => {
+    try {
+        const products = await Product.find({
+            name: req.params.name,
+            price: req.params.price,
+            category: req.params.category,
+            brand: req.params.brand
+        });
+        res.status(200).json({products});
+    } catch (err) {
+        res.status(500).send(err);
+    }
+});
+
+
 
 
 module.exports = product;
